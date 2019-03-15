@@ -2,7 +2,11 @@ cmake_minimum_required(VERSION 2.8.3)
 project(moveit_visual_tools)
 
 # C++ 11 required for OMPL
+if(WIN32)
+add_compile_options(-D_ENABLE_EXTENDED_ALIGNED_STORAGE)
+else()
 add_compile_options(-std=c++11)
+endif()
 
 # Load catkin and all dependencies required for this package
 find_package(catkin REQUIRED COMPONENTS
@@ -19,6 +23,7 @@ find_package(catkin REQUIRED COMPONENTS
   trajectory_msgs
   cmake_modules
   roslint
+  interactive_markers
 )
 
 find_package(Eigen3 REQUIRED)
@@ -37,6 +42,7 @@ catkin_package(
     graph_msgs
     std_msgs
     trajectory_msgs
+    interactive_markers
   INCLUDE_DIRS include
 )
 
@@ -80,8 +86,14 @@ roslint_cpp()
 #############
 
 # Install libraries
+if(WIN32)
+install(TARGETS ${PROJECT_NAME}
+  ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION})
+else()
 install(TARGETS ${PROJECT_NAME}
   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION})
+endif()
 
 # Install header files
 install(DIRECTORY include/${PROJECT_NAME}/   DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION})

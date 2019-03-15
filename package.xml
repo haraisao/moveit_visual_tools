@@ -17,6 +17,7 @@
   <buildtool_depend>catkin</buildtool_depend>
 
   <depend>rviz_visual_tools</depend>
+  <depend>interactive_markers</depend>
   <depend>tf2_eigen</depend>
   <depend>geometry_msgs</depend>
   <depend>moveit_ros_planning</depend>
